@@ -1,0 +1,87 @@
+# Aifinza Docker Compose - Production
+# Usage: docker compose up -d
+
+services:
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: aifinza-app
+    restart: unless-stopped
+    ports:
+      - "3694:3000"
+    environment:
+      - DATABASE_URL=postgresql://postgres:postgres@db:5432/aifinza
+      - REDIS_URL=redis://redis:6379
+      - NEXTAUTH_URL=http://localhost:3694
+      - NEXTAUTH_SECRET=${NEXTAUTH_SECRET:-your-nextauth-secret-change-in-production}
+      - NODE_ENV=production
+    depends_on:
+      db:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+    networks:
+      - aifinza-network
+
+  db:
+    image: postgres:16-alpine
+    container_name: aifinza-db
+    restart: unless-stopped
+    ports:
+      - "5432:5432"
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_DB=aifinza
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres -d aifinza"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    networks:
+      - aifinza-network
+
+  redis:
+    image: redis:7-alpine
+    container_name: aifinza-redis
+    restart: unless-stopped
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis-data:/data
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    networks:
+      - aifinza-network
+
+  pgadmin:
+    image: dpage/pgadmin4:latest
+    container_name: aifinza-pgadmin
+    restart: unless-stopped
+    ports:
+      - "5050:80"
+    environment:
+      - PGADMIN_DEFAULT_EMAIL=admin@aifinza.co.za
+      - PGADMIN_DEFAULT_PASSWORD=admin
+      - PGADMIN_CONFIG_SERVER_MODE=False
+    volumes:
+      - pgadmin-data:/var/lib/pgadmin
+    depends_on:
+      - db
+    networks:
+      - aifinza-network
+
+networks:
+  aifinza-network:
+    driver: bridge
+
+volumes:
+  postgres-data:
+  redis-data:
+  pgadmin-data:
