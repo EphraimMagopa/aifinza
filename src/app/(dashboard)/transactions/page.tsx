@@ -1,8 +1,9 @@
 "use client";
 
-import { Plus } from "lucide-react";
+import { Plus, Sparkles } from "lucide-react";
 import Link from "next/link";
 import { useCallback, useEffect, useState } from "react";
+import { toast } from "sonner";
 import { TransactionFilters } from "@/components/transactions/transaction-filters";
 import { TransactionTable } from "@/components/transactions/transaction-table";
 import { Button } from "@/components/ui/button";
@@ -52,6 +53,7 @@ export default function TransactionsPage() {
 	const [isLoading, setIsLoading] = useState(true);
 	const [filters, setFilters] = useState<Filters>({});
 	const [selectedIds, setSelectedIds] = useState<string[]>([]);
+	const [isCategorizing, setIsCategorizing] = useState(false);
 
 	const fetchData = useCallback(async () => {
 		if (!businessId) return;
@@ -141,6 +143,56 @@ export default function TransactionsPage() {
 		}
 	}
 
+	async function handleAICategorize() {
+		if (!businessId || selectedIds.length === 0) return;
+
+		// Filter to only uncategorized transactions
+		const uncategorizedIds = transactions
+			.filter((t) => selectedIds.includes(t.id) && !t.category)
+			.map((t) => t.id);
+
+		if (uncategorizedIds.length === 0) {
+			toast.info("No uncategorized transactions", {
+				description: "All selected transactions already have categories.",
+			});
+			return;
+		}
+
+		setIsCategorizing(true);
+
+		try {
+			const response = await fetch("/api/ai/categorize", {
+				method: "POST",
+				headers: { "Content-Type": "application/json" },
+				body: JSON.stringify({
+					businessId,
+					transactionIds: uncategorizedIds.slice(0, 50), // Max 50 at a time
+				}),
+			});
+
+			if (response.ok) {
+				const data = await response.json();
+				toast.success("Categorization complete", {
+					description: `${data.categorized} of ${data.total} transactions categorized.`,
+				});
+				await fetchData();
+				setSelectedIds([]);
+			} else {
+				const errorData = await response.json();
+				toast.error("Categorization failed", {
+					description: errorData.error || "Failed to categorize transactions",
+				});
+			}
+		} catch (error) {
+			console.error("Categorization error:", error);
+			toast.error("Error", {
+				description: "An unexpected error occurred",
+			});
+		} finally {
+			setIsCategorizing(false);
+		}
+	}
+
 	if (businessLoading) {
 		return <TransactionsPageSkeleton />;
 	}
@@ -168,6 +220,12 @@ export default function TransactionsPage() {
 					<p className="text-muted-foreground">View and manage your financial transactions</p>
 				</div>
 				<div className="flex gap-2">
+					{selectedIds.length > 0 && (
+						<Button variant="outline" onClick={handleAICategorize} disabled={isCategorizing}>
+							<Sparkles className="mr-2 h-4 w-4" />
+							{isCategorizing ? "Categorizing..." : `AI Categorize (${selectedIds.length})`}
+						</Button>
+					)}
 					<Button variant="outline" asChild>
 						<Link href="/transactions/import">Import CSV</Link>
 					</Button>

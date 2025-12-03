@@ -1,6 +1,6 @@
 "use client";
 
-import { Building2, CreditCard, Shield, Users } from "lucide-react";
+import { Building2, CreditCard, Receipt, Shield, Users } from "lucide-react";
 import Link from "next/link";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { useBusiness } from "@/hooks/use-business";
@@ -23,6 +23,12 @@ const settingsLinks = [
 		icon: CreditCard,
 		title: "Bank Accounts",
 		description: "Connect and manage your bank accounts",
+	},
+	{
+		href: "/settings/billing",
+		icon: Receipt,
+		title: "Billing & Subscription",
+		description: "Manage your subscription plan and billing settings",
 	},
 	{
 		href: "/profile",

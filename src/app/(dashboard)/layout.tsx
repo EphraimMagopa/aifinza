@@ -1,5 +1,6 @@
 import { redirect } from "next/navigation";
 import { Suspense } from "react";
+import { AssistantWrapper } from "@/components/ai";
 import { Header } from "@/components/dashboard/header";
 import { Sidebar } from "@/components/dashboard/sidebar";
 import { BusinessProvider } from "@/components/providers/business-provider";
@@ -26,6 +27,9 @@ async function DashboardLayoutContent({ children }: { children: React.ReactNode 
 					<main className="flex-1 overflow-y-auto p-4 lg:p-6">{children}</main>
 				</div>
 			</div>
+
+			{/* AI Assistant (floating trigger + sheet) */}
+			<AssistantWrapper />
 		</BusinessProvider>
 	);
 }

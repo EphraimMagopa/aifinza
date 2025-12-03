@@ -1,14 +1,20 @@
 "use client";
 
 import {
+	Bot,
 	Building2,
+	Calculator,
+	CalendarDays,
+	ChartBar,
 	CreditCard,
 	FileText,
 	FolderTree,
 	LayoutDashboard,
 	Receipt,
 	Settings,
+	Truck,
 	Users,
+	Wallet,
 } from "lucide-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
@@ -21,7 +27,14 @@ const navigation = [
 	{ name: "Bank Accounts", href: "/accounts", icon: CreditCard },
 	{ name: "Categories", href: "/categories", icon: FolderTree },
 	{ name: "Invoices", href: "/invoices", icon: FileText },
+	{ name: "Quotes", href: "/quotes", icon: FileText },
 	{ name: "Customers", href: "/customers", icon: Users },
+	{ name: "Suppliers", href: "/suppliers", icon: Truck },
+	{ name: "Reports", href: "/reports", icon: ChartBar },
+	{ name: "Tax", href: "/tax", icon: Calculator },
+	{ name: "Payroll", href: "/payroll", icon: Wallet },
+	{ name: "Calendar", href: "/calendar", icon: CalendarDays },
+	{ name: "AI Assistant", href: "/assistant", icon: Bot },
 ];
 
 const settingsNavigation = [
