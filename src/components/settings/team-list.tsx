@@ -68,6 +68,7 @@ export function TeamList({
 		return (
 			<div className="space-y-4">
 				{Array.from({ length: 3 }).map((_, i) => (
+					// biome-ignore lint/suspicious/noArrayIndexKey: Static skeleton list
 					<div key={`skeleton-${i}`} className="flex items-center gap-4 p-4 border rounded-lg">
 						<Skeleton className="h-10 w-10 rounded-full" />
 						<div className="flex-1 space-y-2">

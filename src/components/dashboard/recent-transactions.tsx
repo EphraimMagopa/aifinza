@@ -34,6 +34,7 @@ export function RecentTransactions({ transactions, isLoading }: RecentTransactio
 				<CardContent>
 					<div className="space-y-4">
 						{Array.from({ length: 5 }).map((_, i) => (
+							// biome-ignore lint/suspicious/noArrayIndexKey: Static skeleton list
 							<TransactionSkeleton key={`skeleton-${i}`} />
 						))}
 					</div>

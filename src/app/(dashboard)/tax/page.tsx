@@ -273,8 +273,7 @@ export default function TaxPage() {
 								<div className="space-y-3">
 									{summary.upcomingDeadlines.map((deadline, index) => {
 										const daysUntil = Math.ceil(
-											(new Date(deadline.dueDate).getTime() - new Date().getTime()) /
-												(1000 * 60 * 60 * 24)
+											(new Date(deadline.dueDate).getTime() - Date.now()) / (1000 * 60 * 60 * 24)
 										);
 										const isUrgent = daysUntil <= 7;
 
@@ -490,6 +489,7 @@ function TaxPageSkeleton() {
 			</div>
 			<div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
 				{Array.from({ length: 4 }).map((_, i) => (
+					// biome-ignore lint/suspicious/noArrayIndexKey: Static skeleton list
 					<Skeleton key={`card-${i}`} className="h-28 rounded-lg" />
 				))}
 			</div>

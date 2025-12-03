@@ -41,7 +41,7 @@ import { useCalendar } from "@/hooks/use-calendar";
 import { cn } from "@/lib/utils";
 import { eventTypeOptions } from "@/lib/validations/calendar";
 import type { CalendarEvent, CalendarEventInput, EventType } from "@/types/calendar";
-import { EVENT_TYPE_COLORS, EVENT_TYPE_LABELS } from "@/types/calendar";
+import { EVENT_TYPE_COLORS } from "@/types/calendar";
 
 export default function CalendarPage() {
 	const { businessId } = useBusiness();
@@ -207,7 +207,7 @@ export default function CalendarPage() {
 
 					{/* Calendar grid */}
 					<div className="grid grid-cols-7 gap-px bg-muted">
-						{weeks.map((week, weekIndex) =>
+						{weeks.map((week, _weekIndex) =>
 							week.map((date) => {
 								const dayEvents = getEventsForDate(date);
 								const isCurrentMonth = isSameMonth(date, currentDate);
@@ -469,6 +469,7 @@ function CalendarSkeleton() {
 				<CardContent>
 					<div className="grid grid-cols-7 gap-px">
 						{Array.from({ length: 35 }).map((_, i) => (
+							// biome-ignore lint/suspicious/noArrayIndexKey: Static skeleton list
 							<Skeleton key={`cal-${i}`} className="h-24" />
 						))}
 					</div>

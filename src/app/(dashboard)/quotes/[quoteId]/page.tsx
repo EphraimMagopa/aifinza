@@ -1,21 +1,12 @@
 "use client";
 
-import {
-	ArrowLeft,
-	ArrowRight,
-	Calendar,
-	Download,
-	FileText,
-	Mail,
-	Pencil,
-	User,
-} from "lucide-react";
+import { ArrowLeft, ArrowRight, Calendar, FileText, Mail, Pencil } from "lucide-react";
 import Link from "next/link";
 import { useParams, useRouter } from "next/navigation";
 import { useCallback, useEffect, useState } from "react";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Skeleton } from "@/components/ui/skeleton";
 import {
 	Table,
@@ -454,6 +445,7 @@ function QuoteDetailSkeleton() {
 			</div>
 			<div className="grid gap-4 md:grid-cols-3">
 				{Array.from({ length: 3 }).map((_, i) => (
+					// biome-ignore lint/suspicious/noArrayIndexKey: Static skeleton list
 					<Skeleton key={`card-${i}`} className="h-32 rounded-lg" />
 				))}
 			</div>

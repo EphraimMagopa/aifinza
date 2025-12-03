@@ -58,7 +58,7 @@ function serializePayslip(payslip: {
 }
 
 // GET /api/businesses/[businessId]/employees/[employeeId]/payslips/[payslipId]
-export async function GET(request: Request, context: RouteContext) {
+export async function GET(_request: Request, context: RouteContext) {
 	try {
 		const session = await auth();
 		if (!session?.user?.id) {
@@ -218,7 +218,7 @@ export async function PUT(request: Request, context: RouteContext) {
 }
 
 // DELETE /api/businesses/[businessId]/employees/[employeeId]/payslips/[payslipId]
-export async function DELETE(request: Request, context: RouteContext) {
+export async function DELETE(_request: Request, context: RouteContext) {
 	try {
 		const session = await auth();
 		if (!session?.user?.id) {

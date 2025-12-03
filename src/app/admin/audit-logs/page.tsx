@@ -277,6 +277,7 @@ export default function AdminAuditLogsPage() {
 					<TableBody>
 						{isLoading ? (
 							Array.from({ length: 10 }).map((_, i) => (
+								// biome-ignore lint/suspicious/noArrayIndexKey: Static skeleton list
 								<TableRow key={`skeleton-${i}`}>
 									<TableCell>
 										<Skeleton className="h-4 w-4" />
@@ -350,75 +351,73 @@ function AuditLogRow({ log }: { log: AuditLog }) {
 
 	return (
 		<Collapsible open={isOpen} onOpenChange={setIsOpen} asChild>
-			<>
-				<TableRow className={hasDetails ? "cursor-pointer" : ""}>
-					<TableCell>
-						{hasDetails && (
-							<CollapsibleTrigger asChild>
-								<Button variant="ghost" size="icon" className="h-6 w-6">
-									{isOpen ? (
-										<ChevronDown className="h-4 w-4" />
-									) : (
-										<ChevronRight className="h-4 w-4" />
-									)}
-								</Button>
-							</CollapsibleTrigger>
-						)}
-					</TableCell>
-					<TableCell className="text-sm">
-						{format(new Date(log.createdAt), "MMM d, yyyy HH:mm:ss")}
-					</TableCell>
-					<TableCell>
-						<Badge variant={getActionVariant(log.action)}>{formatAction(log.action)}</Badge>
-					</TableCell>
-					<TableCell>
-						<div>
-							<span className="font-medium">{log.entityType}</span>
-							<p className="text-xs text-muted-foreground font-mono">{log.entityId}</p>
-						</div>
-					</TableCell>
-					<TableCell>
-						<div>
-							<p className="font-medium">{log.user.name || "Unknown"}</p>
-							<p className="text-xs text-muted-foreground">{log.user.email}</p>
-						</div>
-					</TableCell>
-					<TableCell className="text-sm text-muted-foreground">{log.ipAddress || "-"}</TableCell>
-				</TableRow>
-				{hasDetails && (
-					<CollapsibleContent asChild>
-						<TableRow className="bg-muted/50">
-							<TableCell colSpan={6} className="py-4">
-								<div className="grid gap-4 md:grid-cols-2 px-4">
-									{log.oldValues && (
-										<div>
-											<p className="text-sm font-medium mb-2">Previous Values</p>
-											<pre className="text-xs bg-background rounded p-3 overflow-auto max-h-48">
-												{JSON.stringify(log.oldValues, null, 2)}
-											</pre>
-										</div>
-									)}
-									{log.newValues && (
-										<div>
-											<p className="text-sm font-medium mb-2">New Values</p>
-											<pre className="text-xs bg-background rounded p-3 overflow-auto max-h-48">
-												{JSON.stringify(log.newValues, null, 2)}
-											</pre>
-										</div>
-									)}
-								</div>
-								{log.userAgent && (
-									<div className="px-4 mt-4">
-										<p className="text-xs text-muted-foreground">
-											<span className="font-medium">User Agent:</span> {log.userAgent}
-										</p>
+			<TableRow className={hasDetails ? "cursor-pointer" : ""}>
+				<TableCell>
+					{hasDetails && (
+						<CollapsibleTrigger asChild>
+							<Button variant="ghost" size="icon" className="h-6 w-6">
+								{isOpen ? (
+									<ChevronDown className="h-4 w-4" />
+								) : (
+									<ChevronRight className="h-4 w-4" />
+								)}
+							</Button>
+						</CollapsibleTrigger>
+					)}
+				</TableCell>
+				<TableCell className="text-sm">
+					{format(new Date(log.createdAt), "MMM d, yyyy HH:mm:ss")}
+				</TableCell>
+				<TableCell>
+					<Badge variant={getActionVariant(log.action)}>{formatAction(log.action)}</Badge>
+				</TableCell>
+				<TableCell>
+					<div>
+						<span className="font-medium">{log.entityType}</span>
+						<p className="text-xs text-muted-foreground font-mono">{log.entityId}</p>
+					</div>
+				</TableCell>
+				<TableCell>
+					<div>
+						<p className="font-medium">{log.user.name || "Unknown"}</p>
+						<p className="text-xs text-muted-foreground">{log.user.email}</p>
+					</div>
+				</TableCell>
+				<TableCell className="text-sm text-muted-foreground">{log.ipAddress || "-"}</TableCell>
+			</TableRow>
+			{hasDetails && (
+				<CollapsibleContent asChild>
+					<TableRow className="bg-muted/50">
+						<TableCell colSpan={6} className="py-4">
+							<div className="grid gap-4 md:grid-cols-2 px-4">
+								{log.oldValues && (
+									<div>
+										<p className="text-sm font-medium mb-2">Previous Values</p>
+										<pre className="text-xs bg-background rounded p-3 overflow-auto max-h-48">
+											{JSON.stringify(log.oldValues, null, 2)}
+										</pre>
 									</div>
 								)}
-							</TableCell>
-						</TableRow>
-					</CollapsibleContent>
-				)}
-			</>
+								{log.newValues && (
+									<div>
+										<p className="text-sm font-medium mb-2">New Values</p>
+										<pre className="text-xs bg-background rounded p-3 overflow-auto max-h-48">
+											{JSON.stringify(log.newValues, null, 2)}
+										</pre>
+									</div>
+								)}
+							</div>
+							{log.userAgent && (
+								<div className="px-4 mt-4">
+									<p className="text-xs text-muted-foreground">
+										<span className="font-medium">User Agent:</span> {log.userAgent}
+									</p>
+								</div>
+							)}
+						</TableCell>
+					</TableRow>
+				</CollapsibleContent>
+			)}
 		</Collapsible>
 	);
 }

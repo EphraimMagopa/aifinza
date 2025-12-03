@@ -437,6 +437,7 @@ function TransactionTableSkeleton() {
 	return (
 		<div className="space-y-3">
 			{Array.from({ length: 5 }).map((_, i) => (
+				// biome-ignore lint/suspicious/noArrayIndexKey: Static skeleton list
 				<Skeleton key={`row-${i}`} className="h-12 w-full" />
 			))}
 		</div>

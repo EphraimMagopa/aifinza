@@ -5,7 +5,13 @@ import type Stripe from "stripe";
 import { prisma } from "@/lib/prisma";
 import { getPlanByPriceId, stripe } from "@/lib/stripe";
 
-const webhookSecret = process.env.STRIPE_WEBHOOK_SECRET!;
+function getWebhookSecret(): string {
+	const secret = process.env.STRIPE_WEBHOOK_SECRET;
+	if (!secret) {
+		throw new Error("STRIPE_WEBHOOK_SECRET environment variable is not set");
+	}
+	return secret;
+}
 
 export async function POST(request: Request) {
 	const body = await request.text();
@@ -19,7 +25,7 @@ export async function POST(request: Request) {
 	let event: Stripe.Event;
 
 	try {
-		event = stripe.webhooks.constructEvent(body, signature, webhookSecret);
+		event = stripe.webhooks.constructEvent(body, signature, getWebhookSecret());
 	} catch (error) {
 		console.error("Webhook signature verification failed:", error);
 		return NextResponse.json({ error: "Invalid signature" }, { status: 400 });

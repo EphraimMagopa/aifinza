@@ -50,6 +50,7 @@ export default function SettingsPage() {
 				</div>
 				<div className="grid gap-4 md:grid-cols-2">
 					{Array.from({ length: 4 }).map((_, i) => (
+						// biome-ignore lint/suspicious/noArrayIndexKey: Static skeleton list
 						<div key={`skeleton-${i}`} className="h-32 bg-muted rounded-lg animate-pulse" />
 					))}
 				</div>

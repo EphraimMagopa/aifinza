@@ -374,6 +374,7 @@ function ProfitLossSkeleton() {
 			</div>
 			<div className="grid gap-4 md:grid-cols-4">
 				{Array.from({ length: 4 }).map((_, i) => (
+					// biome-ignore lint/suspicious/noArrayIndexKey: Static skeleton list
 					<Skeleton key={`summary-${i}`} className="h-24 rounded-lg" />
 				))}
 			</div>

@@ -144,6 +144,7 @@ export default function AdminUsersPage() {
 					<TableBody>
 						{isLoading ? (
 							Array.from({ length: 5 }).map((_, i) => (
+								// biome-ignore lint/suspicious/noArrayIndexKey: Static skeleton list
 								<TableRow key={`skeleton-${i}`}>
 									<TableCell>
 										<Skeleton className="h-6 w-48" />

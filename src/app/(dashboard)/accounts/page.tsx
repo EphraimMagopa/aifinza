@@ -223,6 +223,7 @@ function AccountsPageSkeleton({ showHeaderOnly = false }: { showHeaderOnly?: boo
 		return (
 			<div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
 				{Array.from({ length: 3 }).map((_, i) => (
+					// biome-ignore lint/suspicious/noArrayIndexKey: Static skeleton list
 					<Skeleton key={`skeleton-${i}`} className="h-48 rounded-lg" />
 				))}
 			</div>

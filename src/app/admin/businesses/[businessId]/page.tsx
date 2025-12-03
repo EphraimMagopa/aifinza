@@ -373,6 +373,7 @@ function BusinessDetailSkeleton() {
 			</div>
 			<div className="grid gap-4 md:grid-cols-3 lg:grid-cols-6">
 				{Array.from({ length: 6 }).map((_, i) => (
+					// biome-ignore lint/suspicious/noArrayIndexKey: Static skeleton list
 					<Skeleton key={`stat-${i}`} className="h-24" />
 				))}
 			</div>

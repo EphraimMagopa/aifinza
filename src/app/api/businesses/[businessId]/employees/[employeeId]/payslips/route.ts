@@ -18,7 +18,7 @@ async function checkBusinessAccess(userId: string, businessId: string) {
 }
 
 // GET /api/businesses/[businessId]/employees/[employeeId]/payslips
-export async function GET(request: Request, context: RouteContext) {
+export async function GET(_request: Request, context: RouteContext) {
 	try {
 		const session = await auth();
 		if (!session?.user?.id) {

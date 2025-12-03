@@ -37,6 +37,7 @@ export function ChatMessage({ role, content, isLoading }: ChatMessageProps) {
 					) : (
 						<div className="prose prose-sm dark:prose-invert max-w-none">
 							{content.split("\n").map((line, i) => (
+								// biome-ignore lint/suspicious/noArrayIndexKey: Lines are static content
 								<p key={i} className="mb-1 last:mb-0">
 									{line || "\u00A0"}
 								</p>

@@ -1,6 +1,6 @@
 "use client";
 
-import { FileText, MoreHorizontal, Plus, Search, Trash2 } from "lucide-react";
+import { FileText, MoreHorizontal, Plus, Trash2 } from "lucide-react";
 import Link from "next/link";
 import { useCallback, useEffect, useState } from "react";
 import { Badge } from "@/components/ui/badge";
@@ -13,7 +13,6 @@ import {
 	DropdownMenuSeparator,
 	DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { Input } from "@/components/ui/input";
 import {
 	Select,
 	SelectContent,
@@ -31,7 +30,7 @@ import {
 	TableRow,
 } from "@/components/ui/table";
 import { useBusiness, useBusinessRole } from "@/hooks/use-business";
-import { cn, formatCurrency, formatDate } from "@/lib/utils";
+import { formatCurrency, formatDate } from "@/lib/utils";
 import { quoteStatusOptions } from "@/lib/validations/quote";
 
 interface Quote {
@@ -312,6 +311,7 @@ function TableSkeleton() {
 	return (
 		<div className="space-y-3">
 			{Array.from({ length: 5 }).map((_, i) => (
+				// biome-ignore lint/suspicious/noArrayIndexKey: Static skeleton list
 				<Skeleton key={`row-${i}`} className="h-16 w-full" />
 			))}
 		</div>

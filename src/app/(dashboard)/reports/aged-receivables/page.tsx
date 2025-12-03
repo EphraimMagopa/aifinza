@@ -15,7 +15,7 @@ import {
 	TableRow,
 } from "@/components/ui/table";
 import { useBusiness } from "@/hooks/use-business";
-import { cn, formatCurrency } from "@/lib/utils";
+import { formatCurrency } from "@/lib/utils";
 
 interface CustomerAging {
 	customerId: string;
@@ -317,6 +317,7 @@ function AgedReceivablesSkeleton() {
 			</div>
 			<div className="grid gap-4 md:grid-cols-6">
 				{Array.from({ length: 6 }).map((_, i) => (
+					// biome-ignore lint/suspicious/noArrayIndexKey: Static skeleton list
 					<Skeleton key={`aging-${i}`} className="h-20 rounded-lg" />
 				))}
 			</div>

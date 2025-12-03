@@ -341,7 +341,7 @@ function CategoryDialog({
 			});
 		}
 		setError(null);
-	}, [category, open]);
+	}, [category]);
 
 	async function handleSubmit(e: React.FormEvent) {
 		e.preventDefault();

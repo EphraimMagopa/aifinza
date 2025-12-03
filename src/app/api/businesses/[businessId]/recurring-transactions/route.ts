@@ -104,7 +104,13 @@ export async function POST(
 			);
 		}
 
-		const { startDate, endDate, categoryId, bankAccountId, ...data } = parsed.data;
+		const {
+			startDate,
+			endDate,
+			categoryId: _categoryId,
+			bankAccountId: _bankAccountId,
+			...data
+		} = parsed.data;
 
 		// Calculate next due date based on start date
 		const nextDueDate = new Date(startDate);

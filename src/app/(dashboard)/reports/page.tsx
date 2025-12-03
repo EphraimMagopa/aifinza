@@ -348,11 +348,13 @@ function ReportsPageSkeleton() {
 			</div>
 			<div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
 				{Array.from({ length: 4 }).map((_, i) => (
+					// biome-ignore lint/suspicious/noArrayIndexKey: Static skeleton list
 					<Skeleton key={`card-${i}`} className="h-32 rounded-lg" />
 				))}
 			</div>
 			<div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
 				{Array.from({ length: 8 }).map((_, i) => (
+					// biome-ignore lint/suspicious/noArrayIndexKey: Static skeleton list
 					<Skeleton key={`report-${i}`} className="h-32 rounded-lg" />
 				))}
 			</div>

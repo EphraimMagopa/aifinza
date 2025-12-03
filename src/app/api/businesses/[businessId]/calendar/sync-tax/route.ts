@@ -21,7 +21,7 @@ async function checkBusinessAccess(userId: string, businessId: string) {
 
 // POST /api/businesses/[businessId]/calendar/sync-tax
 // Syncs tax period deadlines to calendar events
-export async function POST(request: Request, context: RouteContext) {
+export async function POST(_request: Request, context: RouteContext) {
 	try {
 		const session = await auth();
 		if (!session?.user?.id) {
